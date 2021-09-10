@@ -1,6 +1,4 @@
 import { useQuery } from "@apollo/client";
-import Head from "next/head";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { GET_CHARECTER } from "../graphql/queries";
 import styles from "../styles/Home.module.css";
@@ -8,6 +6,7 @@ import styles from "../styles/Home.module.css";
 const randomId = (_) => parseInt(Math.random() * 671);
 
 export default function Home() {
+
   const [characterId, setCharacterId] = useState(randomId());
   const { loading, error, data } = useQuery(GET_CHARECTER, {
     variables: {
@@ -21,9 +20,10 @@ export default function Home() {
       setCharacter(data.character);
     }
   }, [data]);
+  if(loading) return  <div className={styles.container}> loading...</div> ;
   return (
     <div className={styles.container}>
-      You are
+      You Are
       {character && (
         <>
           <h2> {character.name} </h2>
@@ -34,11 +34,11 @@ export default function Home() {
         className={styles.try__again__btn}
         onClick={() => {
           // todo
-          setCharacterId(randomId())
+          setCharacterId(randomId());
         }}
       >
         {" "}
-        try again 
+        try again
       </button>
     </div>
   );
